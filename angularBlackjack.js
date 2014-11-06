@@ -47,12 +47,16 @@ $blackjack = angular.module('ngBlackjack',['ngSanitize'])
 			$timeout(function() {
 				var dealerPoints = $('.pointsDealer').find("span").text();
 				var myPoints = $('.myPoints').find("span").text();
-				if(myPoints === 21){
-					$("#youWin").modal("show");
-				}else if(myPoints > 21){
+				//You don't automatically win for having 21
+				//if(myPoints === 21){
+				//	$("#youWin").modal("show");
+				//}
+				/*else*/ if(myPoints > 21){
 					$("#youLose").modal("show");
 				}else{
-					$scope.dealerTurn();
+				    //Dealer doesn't go until you're finished hitting
+					//$scope.dealerTurn();
+					;
 				}
 			}, 100);
 		}else{
@@ -177,10 +181,12 @@ $blackjack = angular.module('ngBlackjack',['ngSanitize'])
 			return 0;
 		}else{
 			var total = 0;
+			var aces = 0;
 			for(var i = 0; i < thisHand.length; i++){
 				var valueCard = parseInt(thisHand[i].rank);
 				if(thisHand[i].rank === "A"){
-					total += 1;
+				    //Figure out aces last
+					aces++;
 				}
 				else if(isNaN(valueCard)){
 					total += 10; 
@@ -188,6 +194,12 @@ $blackjack = angular.module('ngBlackjack',['ngSanitize'])
 					total += valueCard;
 				}
 			}
+			//Aces have to count at least one point each
+			total += aces;
+			//The only time we'd want to count an ace as 11 is if we have less that 11 total without it
+			if(total <= 11 && aces != 0)
+			    total += 10;
+			
 			$('.'+scorePanel).find("span").html(total);
 			if(total > 21){
 				$('.'+scorePanel).removeClass("bg-primary").addClass("bg-danger");
