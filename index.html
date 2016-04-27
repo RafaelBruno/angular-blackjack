@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en" ng-app='ngBlackjack'>
+<head>
+	<meta charset="UTF-8">
+	<title>Angular BlackJack</title>
+	<link rel="stylesheet" href="bootstrap.min.css">	
+	<link rel="stylesheet" href="theme.min.css">	
+	<link rel="stylesheet" href="style.css">	
+	<link rel="stylesheet" href="playingCards.ui.css">	
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="favicon.ico" rel="icon" type="image/x-icon" />
+</head>
+<body ng-controller='blackjackCtrl'>
+	<a href="https://github.com/RafaelBruno/angular-blackjack" class="forkme"><img src="forkme.png" alt=""></a>
+	<div class="page-header">
+		<h1 style="text-align:center">Angular Blackjack <small>Beta</small><br/>
+			<small><a href="https://twitter.com/rafaelbrunoweb">
+				@rafaelbrunoweb
+			</a></small>
+		</h1>
+
+	</div>
+
+	<div class="startNewGame row">
+		<div class="col-lg-4"></div>
+		<div class="col-lg-4" style="text-align:center">
+			<a style="margin-top: 5%" ng-click="startGame()" class="btn btn-primary btn-lg btn-block">Start new game</a>
+			<img src="BLACK.png" style="margin-top: 10%;margin-bottom: 10%" alt="">
+		</div>
+		<div class="col-lg-4"></div>
+	</div>
+
+
+	<div class="newGame">
+		<div class="panel-body">
+			<div class="col-lg-9">
+				<div class="col-lg-12">
+					<div class="col-lg-8">
+						<div class="panel panel-success">
+							<div class="panel-body">
+								<h5>Your Hand</h5>
+								<card hand="you" ng-repeat='card in hand'></card>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-4">
+						<h1 style="text-align: center;">
+							Your Points
+							<div class="bg-primary img-circle points myPoints">
+								<span>
+									<span/>
+								</div>
+							</h1>
+						</div>
+					</div>
+					<div class="col-lg-12">
+						<div class="col-lg-8">
+							<div class="panel panel-warning">
+								<div class="panel-body">
+									<h5>Dealer</h5>
+									<card hand="dealer" ng-repeat='card in dealer'></card>
+								</div>
+							</div>
+						</div>
+						<div class="col-lg-4">
+							<h1 style="text-align: center;">
+								Dealer Points
+								<div class="bg-primary img-circle points pointsDealer">
+									<span>
+										<span/>
+									</div>
+								</h1>
+							</div>
+						</div>
+					</div>
+					<div class="col-lg-3">
+						<a ng-click="youTurn()" 
+						class=" newGame btn btn-success btn-lg btn-block pull-right"
+						style="margin:-20px 10px 10px 40px">Start Turn</a>
+						<!-- ACTIONS -->
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<br/>
+						<div id="youTurn" class="modalPanel">
+							<h1 class="modal-title">You Turn</h1>
+							<div class="panel-body">
+								<a class="btn btn-primary btn-lg btn-block" ng-click="hit('new')">Get Card</a>
+								<a  class="btn btn-danger btn-lg btn-block" ng-click="hit('stop')">Stop</a>
+							</div>
+						</div><!-- /.modal -->
+
+						<div id="dealerTurn" class="modalPanel">
+							<h1 class="modal-title">Dealer</h1>
+							<div class="panel-body">
+								<div class="continue alert alert-success dealerAction" role="alert">
+									<strong>Get Card</strong>
+								</div>
+								<div class="stop alert alert-danger dealerAction" role="alert">
+									<strong>Dealer Stop</strong>
+								</div>
+							</div>
+						</div><!-- /.modal -->
+					</div>
+				</div>
+
+				<div id="youWin" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">You Win</h4>
+							</div>
+							<div class="modal-body bg-success">
+								<h2>
+									<strong>YOU WIN</strong>
+								</h2>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default">Fork on Github</button>
+								<button type="button" 
+								ng-click="reload();"
+								class="btn btn-primary">Recomeçar</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+
+				<div id="youLose" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">You Lose</h4>
+							</div>
+							<div class="modal-body bg-danger">
+								<h2>
+									<strong>YOU LOSE</strong>
+								</h2>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default">Fork on Github</button>
+								<button type="button" 
+								ng-click="reload();"
+								class="btn btn-primary">Recomeçar</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+
+				<div id="draw" class="modal fade">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h4 class="modal-title">You Lose</h4>
+							</div>
+							<div class="modal-body bg-warning">
+								<h2>
+									<strong>Draw</strong>
+								</h2>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-default">Fork on Github</button>
+								<button type="button" 
+								ng-click="reload();"
+								class="btn btn-primary">Recomeçar</button>
+							</div>
+						</div><!-- /.modal-content -->
+					</div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
+
+				<script src="angular.min.js"></script>
+				<script src="angular-sanitize.min.js"></script>
+				<script src="jquery.min.js"></script>
+				<script src="bootstrap.js"></script>
+				<script src="playingCards.js"></script>
+				<script src="playingCards.ui.js"></script>
+				<script src="script.js"></script>
+				<script src="angularBlackjack.js"></script>
+			</body>
+			</html>

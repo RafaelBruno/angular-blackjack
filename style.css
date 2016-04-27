@@ -1,0 +1,36 @@
+.playingCard{
+	font-size: 30px!important;
+	-webkit-box-shadow: 9px 9px 25px -8px rgba(0,0,0,0.75);
+	-moz-box-shadow: 9px 9px 25px -8px rgba(0,0,0,0.75);
+	box-shadow: 9px 9px 25px -8px rgba(0,0,0,0.75);
+	margin: 10px;
+}
+
+.points{
+	margin: 30px auto;
+	font-weight: bold;
+	width: 100px;
+	height: 100px;
+	display: table;
+}
+
+.points > span{
+ display: table-cell;
+    vertical-align: middle;
+    color:#fff;
+}
+
+.newGame, .dealerAction{
+	display: none;
+}
+.forkme{
+	position: fixed;
+	top: 0;
+	left: 0;
+	cursor: pointer;
+}
+
+.modalPanel{
+	display: none;
+}
+
